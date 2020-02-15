@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+// #include "math.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ int main(int argc, char **argv){
       int cCount = 0;
       double variance = 0.0;
       double mean = 0.0;
+      double stdev = 0.0;
       double c = 0.0;
       double d = 0.0;
 
@@ -92,9 +94,28 @@ int main(int argc, char **argv){
 
       // variance = ((each length - mean)^2 all added together)/lineCount
       // cout << lineCount << " ";
-      variance /= (lineCount-1); //NOT WORKING, I ASSUME BECAUSE OF FLOAT/INT ERROR
+      variance /= (lineCount-1); // Should we account for if there is only one line
+      stdev = sqrt(variance);
 
       outFS << "variance: " << variance << endl;
+      outFS << "standard deviation: " << stdev << endl;
+
+// RElative probablilities
+      outFS << "A probability: " << aCount/totalNucleotides << endl;
+      outFS << "C probability: " << cCount/totalNucleotides << endl;
+      outFS << "T probability: " << tCount/totalNucleotides << endl;
+      outFS << "G probability: " << gCount/totalNucleotides << endl;
+
+// Bigram probabilities
+
+    double a = 0.0;
+    double b = 0.0;
+
+    a = rand();
+    b = rand();
+
+    c = sqrt((-2 * log(a)) * cos(2*b*M_PI));
+    d = stdev * c + mean;
 
       outFS.close();
 

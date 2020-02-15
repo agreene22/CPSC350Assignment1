@@ -3,6 +3,11 @@ Anna Greene
 agreene@chapman.edu
 Assignment 1
 
-sum: 9
-mean: 4.5
-variance: 0.5
+sum: 4
+mean: 4
+variance: -nan
+standard deviation: -nan
+A probability: 0.5
+C probability: 0
+G probability: 0.25
+T probability: 0.25

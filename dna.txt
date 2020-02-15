@@ -1,2 +1,1 @@
-ACTG
-TGCAA
+AATG
