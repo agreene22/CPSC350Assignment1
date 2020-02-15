@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
-// #include "math.h"
 
 using namespace std;
 
@@ -28,6 +27,24 @@ int main(int argc, char **argv){
       double stdev = 0.0;
       double c = 0.0;
       double d = 0.0;
+
+      int AACount = 0;
+      int ACCount = 0;
+      int ATCount = 0;
+      int AGCount = 0;
+      int CACount = 0;
+      int CTCount = 0;
+      int CGCount = 0;
+      int CCCount = 0;
+      int GGCount = 0;
+      int GACount = 0;
+      int GTCount = 0;
+      int GCCount = 0;
+      int TTCount = 0;
+      int TACount = 0;
+      int TGCount = 0;
+      int TCCount = 0;
+
 
       inFS.open(fileName);
 
@@ -108,14 +125,16 @@ int main(int argc, char **argv){
 
 // Bigram probabilities
 
-    double a = 0.0;
-    double b = 0.0;
+      double a = 0.0;
+      double b = 0.0;
 
-    a = rand();
-    b = rand();
+      a = rand();
+      b = rand();
 
-    c = sqrt((-2 * log(a)) * cos(2*b*M_PI));
-    d = stdev * c + mean;
+      c = sqrt((-2 * log(a)) * cos(2*b*M_PI));
+      d = stdev * c + mean;
+
+      outFS << ""
 
       outFS.close();
 
