@@ -45,8 +45,17 @@ int main(int argc, char **argv){
       int TGCount = 0;
       int TCCount = 0;
 
+      float aProb = 0.0;
+      float cProb = 0.0;
+      float gProb = 0.0;
+      float tProb = 0.0;
 
       inFS.open(fileName);
+
+      if(!inFS.is_open()){
+        cout << "Error: Could not open file." << end;
+        return 1;
+      }
 
       while(!inFS.eof()){
         inFS >> dnaSequence;
@@ -104,7 +113,6 @@ int main(int argc, char **argv){
         if(!inFS.fail()){
           float size = dnaSequence.size() - mean;
           variance += pow(size, 2.0);
-          // cout << variance << endl;
           for(int i = 0; i < dnaSequence.size(); i+=2){
             char bigram1 = toupper(dnaSequence[i]);
             char bigram2 = toupper(dnaSequence[i+1]);
@@ -154,12 +162,17 @@ int main(int argc, char **argv){
 
       outFS << endl;
 
-// RElative probablilities
+// Relative probablilities
+      aProb = aCount/totalNucleotides;
+      cProb = cCount/totalNucleotides;
+      tProb = tCount/totalNucleotides;
+      gProb = gCount/totalNucleotides;
+
       outFS << "Relative Nucleotide Probabilities" << endl;
-      outFS << "A probability: " << aCount/totalNucleotides << endl;
-      outFS << "C probability: " << cCount/totalNucleotides << endl;
-      outFS << "T probability: " << tCount/totalNucleotides << endl;
-      outFS << "G probability: " << gCount/totalNucleotides << endl;
+      outFS << "A probability: " << aProb << endl;
+      outFS << "C probability: " << cProb << endl;
+      outFS << "T probability: " << tProb << endl;
+      outFS << "G probability: " << gProb << endl;
 
       outFS << endl;
 // Bigram probabilities
@@ -182,15 +195,55 @@ int main(int argc, char **argv){
       outFS << "GT probability: " << GTCount/totalNucleotides << endl;
       outFS << "GG probability: " << GGCount/totalNucleotides << endl;
 
-      double a = 0.0;
-      double b = 0.0;
+      // cout << "a Prob: " << aProb << endl;
+      // cout << "c prob: " << cProb << endl;
+      // cout << "a + c " << aProb + cProb << endl;
+      // cout << "a + c + g " << aProb + cProb + gProb << endl;
+      // cout << "a + c + g + t " << aProb + cProb + gProb + tProb << endl;
 
-      a = rand(); //Should this be more specific
-      b = rand(); // i think rand only generates integers????
+      for(int i = 0; i < 1000; ++i){
+        double a = 0.0;
+        double b = 0.0;
+        double e = 0.0;
 
-      c = sqrt((-2 * log(a)) * cos(2*b*M_PI)); //is log the correct function for this??????
-      d = stdev * c + mean;
+        a = (rand())/(double)(RAND_MAX);
+        b = (rand())/(double)(RAND_MAX);
+        // cout << "a " << a << " b " << b << endl;
+        if(a >= 1 || b >= 1){
+          cout << "Error" << endl;
+        }
 
+        c = sqrt((-2 * log(a)) * cos(2*b*M_PI)); //is log the correct function for this??????
+        if (cos(2*b*M_PI) < 0){
+          cout << "error" << endl;
+        }
+        // cout << log(a) << endl;
+        // if(log(a) > 0){
+        //   cout << "error" << endl;
+        // }
+        // cout << (-2 * log(a)) * cos(2*b*M_PI) << endl;
+        // cout << "c " << c << endl;
+        d = stdev * c + mean;
+        d = round(d);
+        // cout << " d " << d << endl;
+
+        string newDNA = "";
+        for(int in = 0; in < d; ++in){
+          e = (rand())/(double)(RAND_MAX);
+          // cout << "c " << c << endl;
+          if(c <= aProb){
+            newDNA += "A";
+          } else if (c <= (aProb + cProb)){
+            newDNA += "C";
+          } else if (c <= (aProb + cProb + gProb)){
+            newDNA += "G";
+          } else if (c <= (aProb + cProb + gProb + tProb)){
+            newDNA += "T";
+          }
+        }
+
+        outFS << newDNA << endl;
+      }
 
       outFS.close();
 
@@ -202,14 +255,13 @@ int main(int argc, char **argv){
         cout << "Would you like to process another list? (y/n)" << endl;
         cin >> input;
         in = tolower(input);
-      } // idk why this doesn't work
+      }
       if(in == 'n'){
         break;
       } else if(in == 'y'){
         cout << "Please enter new file name: " << endl;
         cin >> fileName;
       }
-
     }
 
   } else{
