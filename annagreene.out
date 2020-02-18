@@ -3,11 +3,27 @@ Anna Greene
 agreene@chapman.edu
 Assignment 1
 
-sum: 4
-mean: 4
-variance: -nan
-standard deviation: -nan
-A probability: 0.5
-C probability: 0
-G probability: 0.25
+sum: 32
+mean: 6.4
+variance: 0.64
+standard deviation: 0.8
+A probability: 0.25
+C probability: 0.25
 T probability: 0.25
+G probability: 0.25
+AA probability: 0.0625
+AC probability: 0.0625
+AT probability: 0.0625
+AG probability: 0.0625
+TA probability: 0.0625
+TC probability: 0.0625
+TT probability: 0.0625
+TG probability: 0.0625
+CA probability: 0.0625
+CC probability: 0.0625
+CT probability: 0.0625
+CG probability: 0.0625
+GA probability: 0.0625
+GC probability: 0.0625
+GT probability: 0.0625
+GG probability: 0.0625

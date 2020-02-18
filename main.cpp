@@ -9,12 +9,12 @@ int main(int argc, char **argv){
   ifstream inFS;
   ofstream outFS;
   string dnaSequence;
-  string input = "y";
+  char input = 'y';
 
   if(argc > 1){
     string fileName = argv[1];
 
-    while (input == "y"){
+    while (input == 'y'){
       float lineCount = 0.0;
       int nucleotideCount = 0;
       float totalNucleotides = 0.0;
@@ -52,7 +52,7 @@ int main(int argc, char **argv){
         inFS >> dnaSequence;
         if(!inFS.fail()){
           lineCount++;
-          cout << dnaSequence << endl; //WHY IS IT DOING THE LAST LINE OF THE FILE TWICE????
+          cout << dnaSequence << endl;
           cout << lineCount << endl;
           nucleotideCount = 0;
           for(int i = 0; i < dnaSequence.size(); ++i){
@@ -105,13 +105,50 @@ int main(int argc, char **argv){
           float size = dnaSequence.size() - mean;
           variance += pow(size, 2.0);
           // cout << variance << endl;
+          for(int i = 0; i < dnaSequence.size(); i+=2){
+            char bigram1 = toupper(dnaSequence[i]);
+            char bigram2 = toupper(dnaSequence[i+1]);
+            if (bigram1 == 'A' && bigram2 == 'A'){
+              AACount++;
+            } else if (bigram1 == 'A' && bigram2 == 'C'){
+              ACCount++;
+            } else if( bigram1 == 'A' && bigram2 == 'G'){
+              AGCount++;
+            } else if (bigram1 == 'A' && bigram2 == 'T'){
+              ATCount++;
+            } else if (bigram1 == 'C' && bigram2 == 'A'){
+              CACount++;
+            } else if( bigram1 == 'C' && bigram2 == 'G'){
+              CGCount++;
+            } else if (bigram1 == 'C' && bigram2 == 'T'){
+              CTCount++;
+            } else if (bigram1 == 'C' && bigram2 == 'C'){
+              CCCount++;
+            } else if (bigram1 == 'G' && bigram2 == 'G'){
+              GGCount++;
+            } else if (bigram1 == 'G' && bigram2 == 'T'){
+              GTCount++;
+            } else if (bigram1 == 'G' && bigram2 == 'A'){
+              GACount++;
+            } else if (bigram1 == 'G' && bigram2 == 'C'){
+              GCCount++;
+            } else if (bigram1 == 'T' && bigram2 == 'G'){
+              TGCount++;
+            } else if (bigram1 == 'T' && bigram2 == 'T'){
+              TTCount++;
+            } else if (bigram1 == 'T' && bigram2 == 'A'){
+              TACount++;
+            } else if (bigram1 == 'T' && bigram2 == 'C'){
+              TCCount++;
+            }
+          }
         }
       }
       inFS.close();
 
       // variance = ((each length - mean)^2 all added together)/lineCount
       // cout << lineCount << " ";
-      variance /= (lineCount-1); // Should we account for if there is only one line
+      variance /= (lineCount); // Should we account for if there is only one line
       stdev = sqrt(variance);
 
       outFS << "variance: " << variance << endl;
@@ -124,25 +161,48 @@ int main(int argc, char **argv){
       outFS << "G probability: " << gCount/totalNucleotides << endl;
 
 // Bigram probabilities
+      totalNucleotides /= 2;
+      outFS << "AA probability: " << AACount/totalNucleotides << endl;
+      outFS << "AC probability: " << ACCount/totalNucleotides << endl;
+      outFS << "AT probability: " << ATCount/totalNucleotides << endl;
+      outFS << "AG probability: " << AGCount/totalNucleotides << endl;
+      outFS << "TA probability: " << TACount/totalNucleotides << endl;
+      outFS << "TC probability: " << TCCount/totalNucleotides << endl;
+      outFS << "TT probability: " << TTCount/totalNucleotides << endl;
+      outFS << "TG probability: " << TGCount/totalNucleotides << endl;
+      outFS << "CA probability: " << CACount/totalNucleotides << endl;
+      outFS << "CC probability: " << CCCount/totalNucleotides << endl;
+      outFS << "CT probability: " << CTCount/totalNucleotides << endl;
+      outFS << "CG probability: " << CGCount/totalNucleotides << endl;
+      outFS << "GA probability: " << GACount/totalNucleotides << endl;
+      outFS << "GC probability: " << GCCount/totalNucleotides << endl;
+      outFS << "GT probability: " << GTCount/totalNucleotides << endl;
+      outFS << "GG probability: " << GGCount/totalNucleotides << endl;
 
       double a = 0.0;
       double b = 0.0;
 
-      a = rand();
+      a = rand(); //Should this be more specific
       b = rand();
 
-      c = sqrt((-2 * log(a)) * cos(2*b*M_PI));
+      c = sqrt((-2 * log(a)) * cos(2*b*M_PI)); //is log the correct function for this??????
       d = stdev * c + mean;
 
-      outFS << ""
 
       outFS.close();
 
       cout << "Would you like to process another list? (y/n)" << endl;
       cin >> input;
-      if(input == "n"){
+      char in = tolower(input);
+      // while (in != 'n' || in != 'y'){
+      //   cout << "Invalid input." << endl;
+      //   cout << "Would you like to process another list? (y/n)" << endl;
+      //   cin >> input;
+      //   char in = tolower(input);
+      // } // idk why this doesn't work
+      if(in == 'n'){
         break;
-      } else{
+      } else if(in == 'y'){
         cout << "Please enter new file name: " << endl;
         cin >> fileName;
       }
