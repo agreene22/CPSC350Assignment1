@@ -186,7 +186,7 @@ int main(int argc, char **argv){
       double b = 0.0;
 
       a = rand(); //Should this be more specific
-      b = rand();
+      b = rand(); // i think rand only generates integers????
 
       c = sqrt((-2 * log(a)) * cos(2*b*M_PI)); //is log the correct function for this??????
       d = stdev * c + mean;
@@ -197,12 +197,12 @@ int main(int argc, char **argv){
       cout << "Would you like to process another list? (y/n)" << endl;
       cin >> input;
       char in = tolower(input);
-      // while (in != 'n' || in != 'y'){
-      //   cout << "Invalid input." << endl;
-      //   cout << "Would you like to process another list? (y/n)" << endl;
-      //   cin >> input;
-      //   char in = tolower(input);
-      // } // idk why this doesn't work
+      while (in != 'n' && in != 'y'){
+        cout << "Invalid input." << endl;
+        cout << "Would you like to process another list? (y/n)" << endl;
+        cin >> input;
+        in = tolower(input);
+      } // idk why this doesn't work
       if(in == 'n'){
         break;
       } else if(in == 'y'){
