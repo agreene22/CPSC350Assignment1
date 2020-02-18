@@ -146,21 +146,24 @@ int main(int argc, char **argv){
       }
       inFS.close();
 
-      // variance = ((each length - mean)^2 all added together)/lineCount
-      // cout << lineCount << " ";
       variance /= (lineCount); // Should we account for if there is only one line
       stdev = sqrt(variance);
 
       outFS << "variance: " << variance << endl;
       outFS << "standard deviation: " << stdev << endl;
 
+      outFS << endl;
+
 // RElative probablilities
+      outFS << "Relative Nucleotide Probabilities" << endl;
       outFS << "A probability: " << aCount/totalNucleotides << endl;
       outFS << "C probability: " << cCount/totalNucleotides << endl;
       outFS << "T probability: " << tCount/totalNucleotides << endl;
       outFS << "G probability: " << gCount/totalNucleotides << endl;
 
+      outFS << endl;
 // Bigram probabilities
+      outFS << "Bigram Probabilities" << endl;
       totalNucleotides /= 2;
       outFS << "AA probability: " << AACount/totalNucleotides << endl;
       outFS << "AC probability: " << ACCount/totalNucleotides << endl;
@@ -210,7 +213,7 @@ int main(int argc, char **argv){
     }
 
   } else{
-    cout << "INVALID USAGE: lease enter name of a text file" << endl;
+    cout << "INVALID USAGE: please enter name of a text file" << endl;
     cout << "USAGE: ./a.out [file name]" << endl;
   }
 
