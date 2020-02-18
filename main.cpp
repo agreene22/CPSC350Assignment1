@@ -53,7 +53,7 @@ int main(int argc, char **argv){
       inFS.open(fileName);
 
       if(!inFS.is_open()){
-        cout << "Error: Could not open file." << end;
+        cout << "Error: Could not open file." << endl;
         return 1;
       }
 
@@ -195,6 +195,8 @@ int main(int argc, char **argv){
       outFS << "GT probability: " << GTCount/totalNucleotides << endl;
       outFS << "GG probability: " << GGCount/totalNucleotides << endl;
 
+      outFS << endl;
+
       // cout << "a Prob: " << aProb << endl;
       // cout << "c prob: " << cProb << endl;
       // cout << "a + c " << aProb + cProb << endl;
@@ -213,10 +215,10 @@ int main(int argc, char **argv){
           cout << "Error" << endl;
         }
 
-        c = sqrt((-2 * log(a)) * cos(2*b*M_PI)); //is log the correct function for this??????
-        if (cos(2*b*M_PI) < 0){
-          cout << "error" << endl;
-        }
+        c = (sqrt(-2 * log(a)) * cos(2*b*M_PI));
+        // if (cos(2*b*M_PI) < 0){
+        //   cout << "error" << endl;
+        // }
         // cout << log(a) << endl;
         // if(log(a) > 0){
         //   cout << "error" << endl;
@@ -231,13 +233,13 @@ int main(int argc, char **argv){
         for(int in = 0; in < d; ++in){
           e = (rand())/(double)(RAND_MAX);
           // cout << "c " << c << endl;
-          if(c <= aProb){
+          if(e <= aProb){
             newDNA += "A";
-          } else if (c <= (aProb + cProb)){
+          } else if (e <= (aProb + cProb)){
             newDNA += "C";
-          } else if (c <= (aProb + cProb + gProb)){
+          } else if (e <= (aProb + cProb + gProb)){
             newDNA += "G";
-          } else if (c <= (aProb + cProb + gProb + tProb)){
+          } else if (e <= (aProb + cProb + gProb + tProb)){
             newDNA += "T";
           }
         }
