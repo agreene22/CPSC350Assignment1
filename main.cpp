@@ -16,6 +16,11 @@ int main(int argc, char **argv){
     string fileName = argv[1];
 
     outFS.open("annagreene.out");
+    outFS << "Anna Greene" << endl;
+    outFS << "2314663" << endl;
+    outFS << "agreene@chapman.edu" << endl;
+    outFS << "Assignment 1" << endl;
+    outFS << endl;
 
     while (input == 'y'){
       float lineCount = 0.0;
@@ -65,8 +70,6 @@ int main(int argc, char **argv){
         inFS >> dnaSequence;
         if(!inFS.fail()){
           lineCount++;
-          cout << dnaSequence << endl;
-          cout << lineCount << endl;
           nucleotideCount = 0;
           for(int i = 0; i < dnaSequence.size(); ++i){
             char currNucleotide = toupper(dnaSequence[i]);
@@ -74,39 +77,22 @@ int main(int argc, char **argv){
             switch (currNucleotide) {
               case 'A':
               aCount++;
-              cout << aCount << " "; // Remove these print statements later
               break;
               case 'C':
               cCount++;
-              cout << cCount << " ";
               break;case 'T':
               tCount++;
-              cout << tCount << " ";
               break;
               case 'G':
               gCount++;
-              cout << gCount << " ";
             }
-            cout << currNucleotide << endl; // Remove this later
           }
           totalNucleotides += nucleotideCount;
         }
-        cout << "total " << totalNucleotides << endl;
       }
 
       inFS.close();
 
-      // compute sum, mean, variance, standard deviation
-      cout << "File " << fileCount << endl;
-      if(fileCount = 1){
-        outFS << "Anna Greene" << endl;
-        outFS << "2314663" << endl;
-        outFS << "agreene@chapman.edu" << endl;
-        outFS << "Assignment 1" << endl;
-        outFS << endl;
-      }
-
-      cout << totalNucleotides << " " << lineCount << endl;
       mean = totalNucleotides/lineCount;
 
       outFS << "sum: " << totalNucleotides << endl;
@@ -203,11 +189,6 @@ int main(int argc, char **argv){
 
       outFS << endl;
 
-      // cout << "a Prob: " << aProb << endl;
-      // cout << "c prob: " << cProb << endl;
-      // cout << "a + c " << aProb + cProb << endl;
-      // cout << "a + c + g " << aProb + cProb + gProb << endl;
-      // cout << "a + c + g + t " << aProb + cProb + gProb + tProb << endl;
 
       for(int i = 0; i < 1000; ++i){
         double a = 0.0;
@@ -216,29 +197,14 @@ int main(int argc, char **argv){
 
         a = (rand())/(double)(RAND_MAX);
         b = (rand())/(double)(RAND_MAX);
-        // cout << "a " << a << " b " << b << endl;
-        if(a >= 1 || b >= 1){
-          cout << "Error" << endl;
-        }
 
         c = (sqrt(-2 * log(a)) * cos(2*b*M_PI));
-        // if (cos(2*b*M_PI) < 0){
-        //   cout << "error" << endl;
-        // }
-        // cout << log(a) << endl;
-        // if(log(a) > 0){
-        //   cout << "error" << endl;
-        // }
-        // cout << (-2 * log(a)) * cos(2*b*M_PI) << endl;
-        // cout << "c " << c << endl;
         d = stdev * c + mean;
         d = round(d);
-        // cout << " d " << d << endl;
 
         string newDNA = "";
         for(int in = 0; in < d; ++in){
           e = (rand())/(double)(RAND_MAX);
-          // cout << "c " << c << endl;
           if(e <= aProb){
             newDNA += "A";
           } else if (e <= (aProb + cProb)){
