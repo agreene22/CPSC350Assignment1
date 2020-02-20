@@ -10,7 +10,6 @@ int main(int argc, char **argv){
   ofstream outFS;
   string dnaSequence;
   char input = 'y';
-  int fileCount = 0;
 
   if(argc > 1){
     string fileName = argv[1];
@@ -59,12 +58,12 @@ int main(int argc, char **argv){
       float tProb = 0.0;
 
       inFS.open(fileName);
-      fileCount++;
 
       if(!inFS.is_open()){
         cout << "Error: Could not open file." << endl;
         return 1;
       }
+      cout << "Processing file." << endl;
 
       while(!inFS.eof()){
         inFS >> dnaSequence;
@@ -94,6 +93,9 @@ int main(int argc, char **argv){
       inFS.close();
 
       mean = totalNucleotides/lineCount;
+
+      outFS << fileName << " Summary Statistics" << endl;
+      outFS << endl;
 
       outFS << "sum: " << totalNucleotides << endl;
       outFS << "mean: " << mean << endl;
@@ -219,6 +221,7 @@ int main(int argc, char **argv){
         outFS << newDNA << endl;
       }
       outFS << endl;
+      cout << "Summary Statistics added to annagreene.out" << endl;
 
       cout << "Would you like to process another list? (y/n)" << endl;
       cin >> input;
