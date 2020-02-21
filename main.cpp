@@ -79,14 +79,15 @@ int main(int argc, char **argv){
 
       // While loop to read each line of the file and count each nucleotide
       while(!inFS.eof()){
+        // Read each line of the file
         inFS >> dnaSequence;
         if(!inFS.fail()){
-          lineCount++;
-          nucleotideCount = 0;
+          lineCount++; // Updating line count variable
+          nucleotideCount = 0; // reseting nucleotideCount for the line to 0
           for(int i = 0; i < dnaSequence.size(); ++i){
-            char currNucleotide = toupper(dnaSequence[i]);
-            nucleotideCount++;
-            switch (currNucleotide) {
+            char currNucleotide = toupper(dnaSequence[i]); // Making all nucleotides uppercase
+            nucleotideCount++; // Updating nucleotide count for number of nucleotides in the line
+            switch (currNucleotide) { // Switch statement to update each nucleotides count
               case 'A':
               aCount++;
               break;
@@ -99,7 +100,7 @@ int main(int argc, char **argv){
               gCount++;
             }
           }
-          totalNucleotides += nucleotideCount;
+          totalNucleotides += nucleotideCount; // Updating total nucleotide count
         }
       }
 
@@ -118,14 +119,16 @@ int main(int argc, char **argv){
       inFS.open(fileName);
 
       while(!inFS.eof()){
+        // Read each line of the file
         inFS >> dnaSequence;
         if(!inFS.fail()){
-          float size = dnaSequence.size() - mean;
-          variance += pow(size, 2.0);
+          float size = dnaSequence.size() - mean; // Calculating numerator for variance
+          variance += pow(size, 2.0); // Continuation of calculation
+          // for loop to check the bigram probabilities
           for(int i = 0; i < dnaSequence.size(); i+=2){
-            char bigram1 = toupper(dnaSequence[i]);
+            char bigram1 = toupper(dnaSequence[i]); // Making each letter checked upper case
             char bigram2 = toupper(dnaSequence[i+1]);
-            if (bigram1 == 'A' && bigram2 == 'A'){
+            if (bigram1 == 'A' && bigram2 == 'A'){ // if-else statements to update bigram counts
               AACount++;
             } else if (bigram1 == 'A' && bigram2 == 'C'){
               ACCount++;
@@ -222,14 +225,16 @@ int main(int argc, char **argv){
         a = (rand())/(double)(RAND_MAX);
         b = (rand())/(double)(RAND_MAX);
 
+        // Computing c and d for Gaussian calculation
         c = (sqrt(-2 * log(a)) * cos(2*b*M_PI));
         d = stdev * c + mean;
         d = round(d);
 
-        string newDNA = "";
+        string newDNA = ""; // declaring and initializing new string of DNA to be appended
+
         // Generating the new nucleotide sequence using probabilities
         for(int in = 0; in < d; ++in){
-          e = (rand())/(double)(RAND_MAX);
+          e = (rand())/(double)(RAND_MAX); // generating random number [0,1) to choose nucleotide based on probability
           if(e <= aProb){
             newDNA += "A";
           } else if (e <= (aProb + cProb)){
@@ -249,14 +254,15 @@ int main(int argc, char **argv){
       // Asking user if they would like to process andother list
       // Using input to rerun the program or exit
       cout << "Would you like to process another list? (y/n)" << endl;
-      cin >> input;
+      cin >> input; // Read user input
       char in = tolower(input);
-      while (in != 'n' && in != 'y'){
+      while (in != 'n' && in != 'y'){ // While statement to check for valid input
         cout << "Invalid input." << endl;
         cout << "Would you like to process another list? (y/n)" << endl;
         cin >> input;
         in = tolower(input);
       }
+      // if-else statment to break or continue
       if(in == 'n'){
         outFS.close();
         break;
