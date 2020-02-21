@@ -1,3 +1,10 @@
+/*
+Anna Greene - 2314663
+Assignment 1
+This file takes in a file via command line and generates summary statistics for the DNA strings
+It then generates 1000 new DNA sequences based on a Gaussian distribution
+ */
+
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -6,14 +13,15 @@ using namespace std;
 
 int main(int argc, char **argv){
 
-  ifstream inFS;
+  ifstream inFS; // Declaring variables and setting default values
   ofstream outFS;
-  string dnaSequence;
+  string dnaSequence = "";
   char input = 'y';
 
   if(argc > 1){
-    string fileName = argv[1];
+    string fileName = argv[1]; // Using command line for file one
 
+    // Opening file out stream and writing header
     outFS.open("annagreene.out");
     outFS << "Anna Greene" << endl;
     outFS << "2314663" << endl;
@@ -21,7 +29,9 @@ int main(int argc, char **argv){
     outFS << "Assignment 1" << endl;
     outFS << endl;
 
+    // While loop to run statistics and generate new strings while the user wants to continue
     while (input == 'y'){
+      // Declaring and initializing all variables to default values
       float lineCount = 0.0;
       int nucleotideCount = 0;
       float totalNucleotides = 0.0;
@@ -57,14 +67,17 @@ int main(int argc, char **argv){
       float gProb = 0.0;
       float tProb = 0.0;
 
+      // Opening input file
       inFS.open(fileName);
 
+      // Checking if file opens properly and if not quit the program
       if(!inFS.is_open()){
         cout << "Error: Could not open file." << endl;
         return 1;
       }
       cout << "Processing file." << endl;
 
+      // While loop to read each line of the file and count each nucleotide
       while(!inFS.eof()){
         inFS >> dnaSequence;
         if(!inFS.fail()){
@@ -92,6 +105,7 @@ int main(int argc, char **argv){
 
       inFS.close();
 
+      // Computing mean and displaying to annagreene.out file
       mean = totalNucleotides/lineCount;
 
       outFS << fileName << " Summary Statistics" << endl;
@@ -100,6 +114,7 @@ int main(int argc, char **argv){
       outFS << "sum: " << totalNucleotides << endl;
       outFS << "mean: " << mean << endl;
 
+      // Re-opening file to compute variance and count bigrams
       inFS.open(fileName);
 
       while(!inFS.eof()){
@@ -148,7 +163,9 @@ int main(int argc, char **argv){
       }
       inFS.close();
 
-      variance /= (lineCount); // Should we account for if there is only one line
+      // Calculation of variance and standard deviation
+      // Write variance and standard deviaton to annagreene.out
+      variance /= (lineCount);
       stdev = sqrt(variance);
 
       outFS << "variance: " << variance << endl;
@@ -156,7 +173,8 @@ int main(int argc, char **argv){
 
       outFS << endl;
 
-// Relative probablilities
+      // Computing relative nucleotide propabilities
+      // Writing the results to result file
       aProb = aCount/totalNucleotides;
       cProb = cCount/totalNucleotides;
       tProb = tCount/totalNucleotides;
@@ -169,7 +187,9 @@ int main(int argc, char **argv){
       outFS << "G probability: " << gProb << endl;
 
       outFS << endl;
-// Bigram probabilities
+
+      // Computing bigram probabilities
+      // Writing propbabilities to output file
       outFS << "Bigram Probabilities" << endl;
       totalNucleotides /= 2;
       outFS << "AA probability: " << AACount/totalNucleotides << endl;
@@ -192,11 +212,13 @@ int main(int argc, char **argv){
       outFS << endl;
 
 
+      // For loop to generate 1000 new strings using a Gaussian distribution and nucleotide probability
       for(int i = 0; i < 1000; ++i){
         double a = 0.0;
         double b = 0.0;
         double e = 0.0;
 
+        // generating two random numbers [0,1) for calculation
         a = (rand())/(double)(RAND_MAX);
         b = (rand())/(double)(RAND_MAX);
 
@@ -205,6 +227,7 @@ int main(int argc, char **argv){
         d = round(d);
 
         string newDNA = "";
+        // Generating the new nucleotide sequence using probabilities
         for(int in = 0; in < d; ++in){
           e = (rand())/(double)(RAND_MAX);
           if(e <= aProb){
@@ -217,12 +240,14 @@ int main(int argc, char **argv){
             newDNA += "T";
           }
         }
-
+        // Writing new DNA sequence to output file
         outFS << newDNA << endl;
       }
       outFS << endl;
       cout << "Summary Statistics added to annagreene.out" << endl;
 
+      // Asking user if they would like to process andother list
+      // Using input to rerun the program or exit
       cout << "Would you like to process another list? (y/n)" << endl;
       cin >> input;
       char in = tolower(input);
@@ -241,6 +266,7 @@ int main(int argc, char **argv){
       }
     }
 
+    // else statement for if a text file is not given via command line
   } else{
     cout << "INVALID USAGE: please enter name of a text file" << endl;
     cout << "USAGE: ./a.out [file name]" << endl;
