@@ -5,4 +5,4 @@ Anna Greene
 agreene@chapman.edu
 Assignment 1 - DNA
 
-References: C++ zybook, http://www.cplusplus.com/reference/cmath/, talked with Brandon Kleinman
+References: C++ zybook, http://www.cplusplus.com/reference/cmath/, talked with Brandon Kleinman, Jessie Roux
