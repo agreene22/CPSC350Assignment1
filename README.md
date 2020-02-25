@@ -5,6 +5,6 @@ Anna Greene
 agreene@chapman.edu
 Assignment 1 - DNA
 
-If an invalid nucleotide is entered it is still counted towards length
+If an invalid nucleotide is entered it is still counted towards line length
 
 References: C++ zybook, http://www.cplusplus.com/reference/cmath/, talked with Brandon Kleinman, Jessie Roux
